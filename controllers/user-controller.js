@@ -18,8 +18,8 @@ router.post('/register', function(req, res) {
     .then(
         createSuccess = (user) => {
             let token = jwt.sign({id: user.id, isAdmin: user.isAdmin}, process.env.JWT_SECRET, {expiresIn: '1d'});
-            userID = user.id;
-            isAdmin = user.isAdmin;
+            // userID = user.id;
+            // isAdmin = user.isAdmin;
             
             res.json({
                 id:   user.id,

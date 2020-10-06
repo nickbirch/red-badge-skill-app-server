@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const AllSkill = sequelize.define("allSkill", {
+    const Tag = sequelize.define("tag", {
       skillName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -7,6 +7,6 @@ module.exports = (sequelize, DataTypes) => {
       }
     });
 
-    return AllSkill;
+    return Tag;
   };
   

@@ -5,7 +5,7 @@ const app = express();
 const sequelize = require('./db');
 
 const user = require('./controllers/user-controller');
-const allSkill = require('./controllers/all-skill-controller');
+const tag = require('./controllers/tag-controller');
 const userSkill = require('./controllers/user-skill-controller')
 const resource = require('./controllers/resource-controller')
 
@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(require('./middleware/headers'));
 
 app.use('/user', user);
-app.use('/allskills', allSkill);
+app.use('/tag', tag);
 app.use('/myskills', userSkill)
 app.use('/resource', resource);
 

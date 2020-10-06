@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const User = require("../db").import("../models/user");
-const AllSkill = require("../db").import("../models/allSkill");
+const Tag = require("../db").import("../models/tag");
 const UserSkill = require("../db").import("../models/userSkill");
 const validateSession = require("../middleware/validate-session");
 
@@ -9,16 +9,16 @@ const validateSession = require("../middleware/validate-session");
  ********************/
 router.post("/add", validateSession, (req, res) => {
 
-  AllSkill.findOne({ where: { skillName: req.body.skill.skillName } })
+  Tag.findOne({ where: { skillName: req.body.skill.skillName } })
   .then(skill => {
       if (skill === null) {
         res.status(404).send("No matching skill")
       } else {
     UserSkill.create({
-        skillName: skill.skillName,
+        // skillId: skill.skillName,
         activeLearning: req.body.skill.activeLearning,
         userId: req.user.id,
-        allSkillId: skill.id
+        tagId: skill.id
 
       })
         .then((myskill) => res.status(200).json(myskill))
@@ -31,7 +31,11 @@ router.post("/add", validateSession, (req, res) => {
  ***** Get Skills By UserID ****
  ******************************/
 router.get("/", validateSession, (req, res) => {
-    UserSkill.findAll({ where: { userId: req.user.id }})
+    UserSkill.findAll({ where: { userId: req.user.id },
+      include: [{
+          model: Tag
+      }]
+    })
       .then((skills) => res.status(200).json(skills))
       .catch((err) => res.status(500).json({ error: err }));
   });
