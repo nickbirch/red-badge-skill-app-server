@@ -52,6 +52,7 @@ router.post('/login', function(req, res) {
                             // user:   user,
                             id:   user.id,
                             isAdmin: user.isAdmin,
+                            firstName: user.firstName,
                             message:    'Successfully authenticated user.',
                             sessionToken:   token
                         });

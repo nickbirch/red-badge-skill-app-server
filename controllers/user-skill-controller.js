@@ -32,9 +32,12 @@ router.post("/add", validateSession, (req, res) => {
  ******************************/
 router.get("/", validateSession, (req, res) => {
     UserSkill.findAll({ where: { userId: req.user.id },
+      attributes: {exclude: ['createdAt', 'updatedAt', 'userId']},
       include: [{
-          model: Tag
-      }]
+          model: Tag,
+          attributes: {exclude: ['createdAt', 'updatedAt', 'id']},
+      }],
+      order: [["activeLearning", 'DESC']]
     })
       .then((skills) => res.status(200).json(skills))
       .catch((err) => res.status(500).json({ error: err }));

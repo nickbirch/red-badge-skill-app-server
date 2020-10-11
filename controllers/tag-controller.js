@@ -74,8 +74,7 @@ router.post("/add", validateSession, (req, res) => {
  ***** Get All Tags ****
  ******************************/
 router.get("/", validateSession, (req, res) => {
-    Tag.findAll(
-      //{include: [Resource]}
+    Tag.findAll({attributes: {exclude: ['createdAt', 'updatedAt', 'id']}}
       )
       .then((tags) => res.status(200).json(tags))
       .catch((err) => res.status(500).json({ error: err }));
