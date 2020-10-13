@@ -2,6 +2,9 @@ const router = require('express').Router();
 const User = require('../db').import('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const UserSkill = require("../db").import("../models/userSkill");
+const Tag = require("../db").import("../models/tag");
+const validateSession = require("../middleware/validate-session");
 
 /* ***********************************
  *** User Registration ***
@@ -68,6 +71,26 @@ router.post('/login', function(req, res) {
     )
     .catch(err => res.status(500).json({error: err}))
 });
+
+/******************************
+ ***** Get All Users + Skills ****
+ ******************************/
+router.get("/", validateSession, (req, res) => {
+    User.findAll({attributes: {exclude: ['createdAt', 'updatedAt', 'id', 'password']},
+    order: [[ { model: UserSkill }, "activeLearning", 'DESC']],
+    include: [{
+        model: UserSkill, 
+        attributes: {exclude: ['createdAt', 'updatedAt', 'userId', 'id', 'tagId']},
+        include: [{
+            model: Tag, 
+            attributes: {exclude: ['createdAt', 'updatedAt', 'id']}
+        }],
+        
+    }]}
+      )
+      .then((users) => res.status(200).json(users))
+      .catch((err) => res.status(500).json({ error: err }));
+  });
 
 
 module.exports = router;

@@ -52,6 +52,29 @@ router.post("/addtag/:id", validateSession, (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
+/***************************
+ *** Delete Tag from Resource ****
+ **************************/
+router.delete("/deletetag/:id", validateSession, (req, res) => {
+  Tag.findOne({ where: { skillName: req.body.skill.skillName }
+  })
+  .then((tag) => {
+    console.log(tag.id)
+    console.log(req.params.id)
+    ResourceTag.destroy({
+    //where: { [Op.and]: [{ resourceId: req.params.id }, { tagId: tag.id }]},
+    where: { resourceId: req.params.id, tagId: tag.id  }
+    });
+  })
+    .then((response) =>
+      res.status(200).json({
+          message: "resourcetag deleted",
+          resource: response,
+        })
+    )
+    .catch((err) => res.status(500).json({ error: err }));
+});
+
 /******************************
  ***** Get tags for a Resource ****
  ******************************/

@@ -94,7 +94,7 @@ router.get("/:id", validateSession, (req, res) => {
   });
 
 /***************************
- **** Change Skill Name *****
+ **** Change Tag Name *****
  ***************************/
 router.put("/update/:id", validateSession, (req, res) => {
     const updateSkill = {
@@ -110,7 +110,7 @@ router.put("/update/:id", validateSession, (req, res) => {
   });
 
 /***************************
- ****** Delete Skill *******
+ ****** Delete Tag *******
  ***************************/
   router.delete("/delete/:id", validateSession, (req, res) => {
     Tag.destroy({
