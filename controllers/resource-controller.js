@@ -35,9 +35,13 @@ router.post("/add", validateSession, (req, res) => {
  *** Add Tag to Resource ****
  **************************/
 router.post("/addtag/:id", validateSession, (req, res) => {
-  ResourceTag.create({
-    resourceId: req.params.id,
-    tagId: req.body.skill.id,
+  Tag.findOne({ where: { skillName: req.body.skill.skillName }
+  })
+  .then((tag) => {
+    ResourceTag.create({
+      resourceId: req.params.id,
+      tagId: tag.id,
+    });
   })
     .then((response) =>
       res.status(200).json({
