@@ -27,6 +27,7 @@ router.post('/register', function(req, res) {
             res.json({
                 id:   user.id,
                 isAdmin: user.isAdmin,
+                firstName: user.firstName,
                 message:    'User successfully created.',
                 sessionToken:   token
             });
