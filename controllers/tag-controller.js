@@ -31,7 +31,7 @@ let has_more = true;
 
   const getSkills = () => {
     let url = `${baseURL}page=${pageNumber}&pagesize=100&order=desc&sort=popular&site=stackoverflow`
-    console.log(pageNumber)
+    // console.log(pageNumber)
     fetch(url)
     .then((response) => response.json())
     .then((results) => {
@@ -43,7 +43,7 @@ let has_more = true;
             getSkills();
             //console.log(skills);
         } else if (results.has_more === true && pageNumber === 11) {
-          console.log(skills);
+          // console.log(skills);
           skillUpload(skills);
         } else if (results.has_more === false) {
           has_more = false;

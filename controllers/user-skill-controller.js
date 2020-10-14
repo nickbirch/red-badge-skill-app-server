@@ -14,12 +14,12 @@ router.post("/add", validateSession, (req, res) => {
       if (skill === null) {
         res.status(404).send("No matching skill")
       } else {
-    UserSkill.create({
+    UserSkill.findOrCreate({ where: {
         // skillId: skill.skillName,
         activeLearning: req.body.skill.activeLearning,
         userId: req.user.id,
         tagId: skill.id
-
+    }
       })
         .then((myskill) => res.status(200).json(myskill))
         .catch((err) => res.status(500).json({ error: err }));
