@@ -42,7 +42,7 @@ let has_more = true;
             pageNumber++
             getSkills();
             //console.log(skills);
-        } else if (results.has_more === true && pageNumber === 111) {
+        } else if (results.has_more === true && pageNumber === 101) {
           // console.log(skills);
           skillUpload(skills);
         } else if (results.has_more === false) {
