@@ -38,11 +38,11 @@ let has_more = true;
         for (let i = 0; i < results.items.length; i++) {
            skills.push(results.items[i].name)
         }
-        if (results.has_more === true && pageNumber <= 10) {
+        if (results.has_more === true && pageNumber <= 100) {
             pageNumber++
             getSkills();
             //console.log(skills);
-        } else if (results.has_more === true && pageNumber === 11) {
+        } else if (results.has_more === true && pageNumber === 111) {
           // console.log(skills);
           skillUpload(skills);
         } else if (results.has_more === false) {
