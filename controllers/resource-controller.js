@@ -5,6 +5,7 @@ const ResourceTag = require("../db").import("../models/resourceTag");
 const validateSession = require("../middleware/validate-session");
 const linkPreviewGenerator = require("link-preview-generator");
 
+
 /************************
  *** Create Resource ****
  ***********************/
