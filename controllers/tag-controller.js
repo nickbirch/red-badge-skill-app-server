@@ -85,6 +85,7 @@ router.get("/", validateSession, (req, res) => {
  ******************************/
 router.get("/:id", validateSession, (req, res) => {
     Tag.findOne({where: {id: req.params.id},
+      order: [[ { model: Resource }, "createdAt", 'DESC']],
         include: [{
             model: Resource
         }]

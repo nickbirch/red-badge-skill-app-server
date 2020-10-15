@@ -3,32 +3,41 @@ const Tag = require("../db").import("../models/tag");
 const Resource = require("../db").import("../models/resource");
 const ResourceTag = require("../db").import("../models/resourceTag");
 const validateSession = require("../middleware/validate-session");
+const linkPreviewGenerator = require("link-preview-generator");
 
 /************************
  *** Create Resource ****
  ***********************/
 router.post("/add", validateSession, (req, res) => {
-  Resource.create({
-    title: req.body.resource.title,
-    description: req.body.resource.description,
-    type: req.body.resource.type,
-    link: req.body.resource.link,
-  })
-    .then((resource) => {
-      // console.log("req.body", req.body);
-      // console.log("resource", resource);
-      ResourceTag.create({ // adds to join table for reference
-        resourceId: resource.id,
-        tagId: req.body.skill.id,
-      });
+
+  async function getPreview() {
+    const previewData = await linkPreviewGenerator(
+      req.body.resource.link
+    );
+    Resource.create({
+      title: previewData.title,
+      description: previewData.description,
+      type: req.body.resource.type,
+      link: req.body.resource.link,
     })
-    .then((response) =>
-      res.status(200).json({
-          message: "resource and resourcetag created!",
-          resource: response,
-        })
-    )
-    .catch((err) => res.status(500).json({ error: err }));
+      .then((resource) => {
+        // console.log("req.body", req.body);
+        // console.log("resource", resource);
+        ResourceTag.create({ // adds to join table for reference
+          resourceId: resource.id,
+          tagId: req.body.skill.id,
+        });
+      })
+      .then((response) =>
+        res.status(200).json({
+            message: "resource and resourcetag created!",
+            resource: response,
+          })
+      )
+      .catch((err) => res.status(500).json({ error: err }));
+  }
+ getPreview();
+
 });
 
 /***************************
