@@ -9,21 +9,19 @@ const validateSession = require("../middleware/validate-session");
  ********************/
 router.post("/add", validateSession, (req, res) => {
 
-  Tag.findOne({ where: { skillName: req.body.skill.skillName } })
+  Tag.findOrCreate({ where: { skillName: req.body.skill.skillName } })
   .then(skill => {
-      if (skill === null) {
-        res.status(404).send("No matching skill")
-      } else {
+    console.log("skill: ", skill[0].dataValues.id)
+
     UserSkill.findOrCreate({ where: {
         // skillId: skill.skillName,
         activeLearning: req.body.skill.activeLearning,
         userId: req.user.id,
-        tagId: skill.id
+        tagId: skill[0].dataValues.id
     }
       })
         .then((myskill) => res.status(200).json(myskill))
         .catch((err) => res.status(500).json({ error: err }));
-    }
   })
 });
 
