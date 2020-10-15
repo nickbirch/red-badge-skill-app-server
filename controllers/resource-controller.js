@@ -13,7 +13,11 @@ router.post("/add", validateSession, (req, res) => {
 
   async function getPreview() {
     const previewData = await linkPreviewGenerator(
-      req.body.resource.link
+      req.body.resource.link,
+      [
+        '--no-sandbox',
+        '--disable-setuid-sandbox'
+      ]
     );
     Resource.create({
       title: previewData.title,
