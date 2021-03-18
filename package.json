@@ -21,6 +21,6 @@
     "link-preview-generator": "0.0.4",
     "node-fetch": "^2.6.1",
     "pg": "^7.11.0",
-    "sequelize": "^5.21.1"
+    "sequelize": "^5.22.4"
   }
 }
